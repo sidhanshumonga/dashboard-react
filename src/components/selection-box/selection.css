@@ -1,0 +1,13 @@
+.btn-primary {
+    background-color: #2962FF !important;
+    color: white !important;
+    outline: none !important;
+}
+button:focus {
+    outline: none !important;
+}
+
+.btn-checked {
+    background-color: #43A047 !important;
+    color: white !important;
+}
