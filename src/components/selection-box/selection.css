@@ -11,3 +11,8 @@ button:focus {
     background-color: #43A047 !important;
     color: white !important;
 }
+
+.charts-container {
+    height: 70vh;
+    /* border: 1px solid black; */
+}

@@ -19,7 +19,7 @@ import {
 } from "@material-ui/pickers";
 import Location from "../dialog-box/location/location.js";
 import Slide from "@material-ui/core/Slide";
-
+import Loader from "../Loader/Loader.js";
 function sleep(delay = 0) {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
@@ -35,10 +35,12 @@ export default function Selection() {
   const [selectedLocation, setSelectedLocation] = React.useState();
   const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
   const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
-  const loading = AutocompleteOpen && AutocompleteOptions.length === 0;
+  const indicatorsLoading =
+    AutocompleteOpen && AutocompleteOptions.length === 0;
 
   const [DialogOpen, setDialogOpen] = React.useState(false);
   const [DialogType, setDialogType] = React.useState("location");
+  const [chartsLoading, setChartsLoading] = React.useState(false);
 
   const handleDateChange = (date) => {
     if (date) {
@@ -57,7 +59,7 @@ export default function Selection() {
   };
 
   const handleClose = () => {
-    setSelectedLocation('');
+    setSelectedLocation("");
     setDialogOpen(false);
   };
 
@@ -65,10 +67,14 @@ export default function Selection() {
     setDialogOpen(false);
   };
 
+  const loadingStart = () => {
+    setChartsLoading(true);
+  };
+
   React.useEffect(() => {
     let active = true;
 
-    if (!loading) {
+    if (!indicatorsLoading) {
       return undefined;
     }
 
@@ -87,7 +93,7 @@ export default function Selection() {
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [indicatorsLoading]);
 
   React.useEffect(() => {
     if (!AutocompleteOpen) {
@@ -113,7 +119,7 @@ export default function Selection() {
               getOptionSelected={(option, value) => option.name === value.name}
               getOptionLabel={(option) => option.name}
               options={AutocompleteOptions}
-              loading={loading}
+              loading={indicatorsLoading}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -123,7 +129,7 @@ export default function Selection() {
                     ...params.InputProps,
                     endAdornment: (
                       <React.Fragment>
-                        {loading ? (
+                        {indicatorsLoading ? (
                           <CircularProgress color="inherit" size={20} />
                         ) : null}
                         {params.InputProps.endAdornment}
@@ -160,7 +166,11 @@ export default function Selection() {
           </Button>
         </Col>
         <Col className="col-2 text-right mt-3">
-          <Button variant="contained" className="btn-primary">
+          <Button
+            variant="contained"
+            className="btn-primary"
+            onClick={() => loadingStart()}
+          >
             Done
           </Button>
         </Col>
@@ -210,6 +220,11 @@ export default function Selection() {
           TextFieldComponent={() => null}
         />
       </MuiPickersUtilsProvider>
+      <Row className="justify-content-center mt-5">
+        <Col className="col-10 charts-container">
+          {chartsLoading ? <Loader className="loader-div"></Loader> : null}
+        </Col>
+      </Row>
     </div>
   );
 }
