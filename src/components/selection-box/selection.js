@@ -10,12 +10,15 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import Location from "../dialog-box/location/location.js";
+import Slide from "@material-ui/core/Slide";
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -23,8 +26,19 @@ function sleep(delay = 0) {
   });
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export default function Selection() {
   const [selectedDate, setSelectedDate] = React.useState();
+  const [selectedLocation, setSelectedLocation] = React.useState();
+  const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
+  const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
+  const loading = AutocompleteOpen && AutocompleteOptions.length === 0;
+
+  const [DialogOpen, setDialogOpen] = React.useState(false);
+  const [DialogType, setDialogType] = React.useState("location");
 
   const handleDateChange = (date) => {
     if (date) {
@@ -33,12 +47,9 @@ export default function Selection() {
     setDialogOpen(false);
   };
 
-  const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
-  const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
-  const loading = AutocompleteOpen && AutocompleteOptions.length === 0;
-
-  const [DialogOpen, setDialogOpen] = React.useState(false);
-  const [DialogType, setDialogType] = React.useState("location");
+  const updateLocation = (location) => {
+    setSelectedLocation(location);
+  };
 
   const handleClickOpen = (type) => {
     setDialogOpen(true);
@@ -46,6 +57,11 @@ export default function Selection() {
   };
 
   const handleClose = () => {
+    setSelectedLocation('');
+    setDialogOpen(false);
+  };
+
+  const handleSave = () => {
     setDialogOpen(false);
   };
 
@@ -124,11 +140,13 @@ export default function Selection() {
         <Col className="col-4 mt-3 text-left">
           <Button
             variant="contained"
-            className="mr-2"
+            className={"mr-2" + (selectedLocation ? " btn-checked" : "")}
             onClick={() => handleClickOpen("location")}
           >
-            <i className="material-icons">add</i>
-            Select location
+            <i className="material-icons">
+              {selectedLocation ? "check" : "add"}
+            </i>
+            {selectedLocation ? selectedLocation : "Select location"}
           </Button>
           <Button
             variant="contained"
@@ -150,6 +168,9 @@ export default function Selection() {
       <Dialog
         open={DialogOpen && DialogType === "location"}
         onClose={handleClose}
+        fullWidth={true}
+        maxWidth="sm"
+        TransitionComponent={Transition}
         scroll={"paper"}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
@@ -158,11 +179,18 @@ export default function Selection() {
           {DialogType === "location" ? "Select location" : "Select Date"}
         </DialogTitle>
         <DialogContent dividers={true}>
-          <DialogContentText
-            id="scroll-dialog-description"
-            tabIndex={-1}
-          ></DialogContentText>
+          <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+            <Location onSelect={updateLocation}></Location>
+          </DialogContentText>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
       </Dialog>
       {/* Date picker here */}
       <MuiPickersUtilsProvider utils={MomentUtils}>
