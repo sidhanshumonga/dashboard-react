@@ -79,13 +79,14 @@ export default function Selection() {
     }
 
     (async () => {
-      const response = await fetch(urls.countries);
+      const response = await fetch(urls.indicators);
       await sleep(1000); // For demo purposes.
-      const countries = await response.json();
+      // const countries = await response.json();
+      const data = await response.json();
 
       if (active) {
         setAutocompleteOptions(
-          Object.keys(countries).map((key) => countries[key].item[0])
+          data.indicators
         );
       }
     })();
