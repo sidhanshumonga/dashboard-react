@@ -32,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function Selection() {
   const [selectedDate, setSelectedDate] = React.useState();
-  const [selectedLocation, setSelectedLocation] = React.useState();
+  const [selectedLocation, setSelectedLocation] = React.useState({});
   const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
   const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
   const indicatorsLoading =
@@ -81,7 +81,6 @@ export default function Selection() {
     (async () => {
       const response = await fetch(urls.indicators);
       await sleep(1000); // For demo purposes.
-      // const countries = await response.json();
       const data = await response.json();
 
       if (active) {
@@ -147,13 +146,13 @@ export default function Selection() {
         <Col className="col-4 mt-3 text-left">
           <Button
             variant="contained"
-            className={"mr-2" + (selectedLocation ? " btn-checked" : "")}
+            className={"mr-2" + (selectedLocation.name ? " btn-checked" : "")}
             onClick={() => handleClickOpen("location")}
           >
             <i className="material-icons">
               {selectedLocation ? "check" : "add"}
             </i>
-            {selectedLocation ? selectedLocation : "Select location"}
+            {selectedLocation.name ? selectedLocation.name : "Select location"}
           </Button>
           <Button
             variant="contained"

@@ -4,6 +4,7 @@ import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
+import * as urls from "../../../urls.js";
 
 const useStyles = makeStyles({
   root: {
@@ -13,38 +14,41 @@ const useStyles = makeStyles({
   },
 });
 
+const renderTree = (nodes, func) => (
+  <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name} onLabelClick={(e) => func(e, nodes)}>
+    {Array.isArray(nodes.children)
+      ? nodes.children.map((node) => renderTree(node, func))
+      : null}
+  </TreeItem>
+);
+
 export default function Location(props) {
   const classes = useStyles();
-  const [selectedItem, setSelectedItem] = React.useState("");
+  const [selectedItem, setSelectedItem] = React.useState({});
+  const [tree, setData] = React.useState({});
 
-  const updateNode = (e, v) => {
+  const updateNode = (e,v) => {
+    e.preventDefault()
     setSelectedItem(v);
     props.onSelect(v);
-  };
+  }
+  React.useEffect(() => {
+    (async () => {
+      const response = await fetch(urls.orgunits);
+      const result = await response.json();
+      const tree = result.organisationUnits.filter((ou) => ou.level === 1)[0];
+      setData(tree);
+    })();
+  }, []);
 
   return (
     <TreeView
-      {...props}
       className={classes.root}
       defaultCollapseIcon={<ExpandMoreIcon />}
+      defaultExpanded={["root"]}
       defaultExpandIcon={<ChevronRightIcon />}
-      selected={selectedItem}
-      onNodeSelect={updateNode}
     >
-      <TreeItem nodeId="Applications" label="Applications">
-        <TreeItem nodeId="Calendar" label="Calendar" />
-        <TreeItem nodeId="Chrome" label="Chrome" />
-        <TreeItem nodeId="Webstorm" label="Webstorm" />
-      </TreeItem>
-      <TreeItem nodeId="Documents" label="Documents">
-        <TreeItem nodeId="OSS" label="OSS" />
-        <TreeItem nodeId="Material" label="Material-UI">
-          <TreeItem nodeId="src" label="src">
-            <TreeItem nodeId="index" label="index.js" />
-            <TreeItem nodeId="tree" label="tree-view.js" />
-          </TreeItem>
-        </TreeItem>
-      </TreeItem>
+      {renderTree(tree, updateNode)}
     </TreeView>
   );
 }
