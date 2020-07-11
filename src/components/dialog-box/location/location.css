@@ -1,0 +1,5 @@
+.MuiTreeItem-root.Mui-selected > .MuiTreeItem-content .MuiTreeItem-label{
+    background: transparent !important;
+    font-weight: bolder;
+    color: black;
+}

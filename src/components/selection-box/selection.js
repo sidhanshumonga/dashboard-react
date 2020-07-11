@@ -42,6 +42,8 @@ export default function Selection() {
   const [DialogType, setDialogType] = React.useState("location");
   const [chartsLoading, setChartsLoading] = React.useState(false);
 
+  const [tree, setData] = React.useState({});
+
   const handleDateChange = (date) => {
     if (date) {
       setSelectedDate(date);
@@ -100,6 +102,16 @@ export default function Selection() {
       setAutocompleteOptions([]);
     }
   }, [AutocompleteOpen]);
+
+  React.useEffect(() => {
+    (async () => {
+      const response = await fetch(urls.orgunits);
+      const result = await response.json();
+      const tree = result.organisationUnits.filter((ou) => ou.level === 1)[0];
+      setData(tree);
+    })();
+  }, []);
+
 
   return (
     <div>
@@ -190,7 +202,7 @@ export default function Selection() {
         </DialogTitle>
         <DialogContent dividers={true}>
           <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            <Location onSelect={updateLocation}></Location>
+            <Location onSelect={updateLocation} tree={tree}></Location>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
