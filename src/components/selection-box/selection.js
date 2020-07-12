@@ -10,6 +10,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Checkbox from '@material-ui/core/Checkbox';
 import DialogActions from "@material-ui/core/DialogActions";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
@@ -20,6 +21,13 @@ import {
 import Location from "../dialog-box/location/location.js";
 import Slide from "@material-ui/core/Slide";
 import Loader from "../Loader/Loader.js";
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+
 function sleep(delay = 0) {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
@@ -30,9 +38,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+async function sendSearchParsms(params) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  };
+  const response = await fetch(urls.getBaseUrl() + urls.postSearchReq, requestOptions);
+  const data = await response.json();
+  console.log(data);
+}
+
 export default function Selection() {
   const [selectedDate, setSelectedDate] = React.useState();
   const [selectedLocation, setSelectedLocation] = React.useState({});
+  const [selectedIndicators, setSelectedIndicators] = React.useState([]);
   const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
   const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
   const indicatorsLoading =
@@ -71,7 +91,18 @@ export default function Selection() {
 
   const loadingStart = () => {
     setChartsLoading(true);
+    const payload = {
+      date: moment(selectedDate).format("DD-MM-YYYY"),
+      orgunit_name: selectedLocation.name,
+      orgunit_id: selectedLocation.id,
+      indicators: selectedIndicators.map(i => i.name),
+    };
+    sendSearchParsms(payload);
   };
+
+  const updateIndicatorsArray = (indicators) => {
+    setSelectedIndicators(indicators)
+  }
 
   React.useEffect(() => {
     let active = true;
@@ -81,14 +112,12 @@ export default function Selection() {
     }
 
     (async () => {
-      const response = await fetch(urls.indicators);
+      const response = await fetch(urls.getBaseUrl() + urls.indicators);
       await sleep(1000); // For demo purposes.
       const data = await response.json();
 
       if (active) {
-        setAutocompleteOptions(
-          data.indicators
-        );
+        setAutocompleteOptions(data.indicators);
       }
     })();
 
@@ -105,13 +134,12 @@ export default function Selection() {
 
   React.useEffect(() => {
     (async () => {
-      const response = await fetch(urls.orgunits);
+      const response = await fetch(urls.getBaseUrl() + urls.orgunits);
       const result = await response.json();
       const tree = result.organisationUnits[0];
       setData(tree);
     })();
   }, []);
-
 
   return (
     <div>
@@ -120,6 +148,7 @@ export default function Selection() {
           <Form>
             <Autocomplete
               id="asynchronous-demo"
+              multiple
               freeSolo
               open={AutocompleteOpen}
               onOpen={() => {
@@ -131,7 +160,20 @@ export default function Selection() {
               getOptionSelected={(option, value) => option.name === value.name}
               getOptionLabel={(option) => option.name}
               options={AutocompleteOptions}
+              disableCloseOnSelect
               loading={indicatorsLoading}
+              onChange={(event, value) => updateIndicatorsArray(value)}
+              renderOption={(option, { selected }) => (
+                <React.Fragment>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.name}
+                </React.Fragment>
+              )}
               renderInput={(params) => (
                 <TextField
                   {...params}

@@ -1,3 +1,9 @@
-export const countries = 'https://country.register.gov.uk/records.json?page-size=500'
-export const indicators = 'https://who.aeturn.dev/api/v1.0/indicator'
-export const orgunits = 'https://who.aeturn.dev/api/v1.0/orgunit'
+export const indicators = 'api/v1.0/indicator'
+export const orgunits = 'api/v1.0/orgunit'
+export const postSearchReq = 'api/v1.0/search'
+
+export const  getBaseUrl = () => {
+    const baseUrl = 'https://who.aeturn.dev/'; //server calls
+
+    return baseUrl
+}
