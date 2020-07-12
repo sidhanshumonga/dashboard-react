@@ -107,7 +107,7 @@ export default function Selection() {
     (async () => {
       const response = await fetch(urls.orgunits);
       const result = await response.json();
-      const tree = result.organisationUnits.filter((ou) => ou.level === 1)[0];
+      const tree = result.organisationUnits[0];
       setData(tree);
     })();
   }, []);
