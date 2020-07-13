@@ -204,7 +204,7 @@ export default function Selection() {
             onClick={() => handleClickOpen("location")}
           >
             <i className="material-icons">
-              {selectedLocation ? "check" : "add"}
+              {selectedLocation.name ? "check" : "add"}
             </i>
             {selectedLocation.name ? selectedLocation.name : "Select location"}
           </Button>
