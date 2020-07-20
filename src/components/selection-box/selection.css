@@ -16,3 +16,8 @@ button:focus {
     height: 70vh;
     /* border: 1px solid black; */
 }
+
+.periodTypeInList {
+    color:gray;
+    font-size: 12px;
+}
