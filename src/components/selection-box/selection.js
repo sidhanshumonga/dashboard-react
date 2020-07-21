@@ -24,6 +24,7 @@ import Loader from "../Loader/Loader.js";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import WeeklyDate from "../dialog-box/date/weekly-date";
+import * as Utils from '../../Utils.js'
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -44,7 +45,7 @@ async function sendSearchParsms(params) {
     body: JSON.stringify(params),
   };
   const response = await fetch(
-    CONSTANTS.getBaseUrl() + CONSTANTS.postSearchReq,
+    Utils.getBaseUrl() + CONSTANTS.postSearchReq,
     requestOptions
   );
   const data = await response.json();
@@ -82,19 +83,11 @@ export default function Selection() {
             periodType === CONSTANTS.PERIOD_TYPE.SIX_MONTHLY
           ? moment(date).format(CONSTANTS.DATE_FORMATS.YEARLY)
           : periodType === CONSTANTS.PERIOD_TYPE.WEEKLY
-          ? makeJSDateObject(date)
+          ? Utils.makeJSDateObject(date)
           : moment(date).format(CONSTANTS.DATE_FORMATS.DAILY)
       );
     }
     setDialogOpen(false);
-  };
-
-  const makeJSDateObject = (date) => {
-    let dateTo = moment(date).format(CONSTANTS.DATE_FORMATS.WEEKLY);
-    let dateFrom = moment(date)
-      .add(7, "d")
-      .format(CONSTANTS.DATE_FORMATS.WEEKLY);
-    return dateTo + " to " + dateFrom;
   };
 
   const handleWeekChange = (date) => {
@@ -122,7 +115,7 @@ export default function Selection() {
   const loadingStart = () => {
     setChartsLoading(true);
     const payload = {
-      date: moment(selectedDate).format(CONSTANTS.DATE_FORMATS.API_FORMAT),
+      date: Utils.getStartAndEndDates(selectedDate, periodType),
       orgunit_name: selectedLocation.name,
       orgunit_id: selectedLocation.id,
       indicators: selectedIndicators.map((i) => i.name),
@@ -151,6 +144,15 @@ export default function Selection() {
   const handleSixMonthlyClose = (idx) => {
     setSixMonthlyType(idx);
     setSixMonthlyPopup(null);
+    if(periodType === CONSTANTS.PERIOD_TYPE.SIX_MONTHLY) {
+      let year = moment(selectedDate).format(CONSTANTS.DATE_FORMATS.YEARLY)
+      if(idx == 1) {
+        setSelectedDate(moment('01-01-' + year).format(CONSTANTS.DATE_FORMATS.API_FORMAT));
+      }
+      else {
+        setSelectedDate(moment('01-07-' + year).format(CONSTANTS.DATE_FORMATS.API_FORMAT));
+      }
+    }
   };
 
   React.useEffect(() => {
@@ -162,7 +164,7 @@ export default function Selection() {
 
     (async () => {
       const response = await fetch(
-        CONSTANTS.getBaseUrl() + CONSTANTS.dataelements
+        Utils.getBaseUrl() + CONSTANTS.dataelements
       );
       await sleep(1000); // For demo purposes.
       const data = await response.json();
@@ -198,7 +200,7 @@ export default function Selection() {
 
   React.useEffect(() => {
     (async () => {
-      const response = await fetch(CONSTANTS.getBaseUrl() + CONSTANTS.orgunits);
+      const response = await fetch(Utils.getBaseUrl() + CONSTANTS.orgunits);
       const result = await response.json();
       const tree = result.organisationUnits[0];
       setData(tree);

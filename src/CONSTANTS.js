@@ -3,12 +3,6 @@ export const dataelements = "api/v1.0/dataelement";
 export const orgunits = "api/v1.0/orgunit";
 export const postSearchReq = "api/v1.0/search";
 
-export const getBaseUrl = () => {
-  const baseUrl = "https://who.aeturn.dev/"; //server calls
-
-  return baseUrl;
-};
-
 export const DIALOG_TYPE = {
     LOCATION : 'location',
     DATE : 'date'
