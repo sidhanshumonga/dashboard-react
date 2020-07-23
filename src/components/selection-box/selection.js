@@ -168,20 +168,22 @@ export default function Selection() {
       );
       await sleep(1000); // For demo purposes.
       const data = await response.json();
-
+      // filter data elements if no period is there.
       if (active) {
         setAutocompleteOptions(
-          data.map((x) => {
-            return {
-              ...x,
-              periodType: x.periodType[0]
-                ? x.periodType[0] === CONSTANTS.PERIOD_TYPE.FINANCIAL_APRIL
-                  ? CONSTANTS.PERIOD_TYPE.YEARLY
-                  : x.periodType[0] === CONSTANTS.PERIOD_TYPE.WEEKLY_WEDNESDAY
-                  ? CONSTANTS.PERIOD_TYPE.WEEKLY
-                  : x.periodType[0]
-                : "",
-            };
+          data.filter((x) => {
+            if(x.periodType.length > 0) {
+              return {
+                ...x,
+                periodType: x.periodType[0]
+                  ? x.periodType[0] === CONSTANTS.PERIOD_TYPE.FINANCIAL_APRIL
+                    ? CONSTANTS.PERIOD_TYPE.YEARLY
+                    : x.periodType[0] === CONSTANTS.PERIOD_TYPE.WEEKLY_WEDNESDAY
+                    ? CONSTANTS.PERIOD_TYPE.WEEKLY
+                    : x.periodType[0]
+                  : "",
+              };
+            }
           })
         );
       }
