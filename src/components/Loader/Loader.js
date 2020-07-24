@@ -1,5 +1,5 @@
-import React from 'react';
-import './Loader.css'
+import React from "react";
+import './loader.css'
 
 export default class Loader extends React.Component {
     render() {

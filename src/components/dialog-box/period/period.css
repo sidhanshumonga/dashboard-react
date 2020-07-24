@@ -1,0 +1,11 @@
+.MuiDialogContent-root {
+  padding: 5px 24px !important;
+}
+
+.MuiListItemIcon-root {
+    min-width: 40px !important;
+}
+
+.MuiMenu-paper {
+    top: 100px !important;
+}

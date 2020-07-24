@@ -17,7 +17,6 @@ button:focus {
     /* border: 1px solid black; */
 }
 
-.periodTypeInList {
-    color:gray;
-    font-size: 12px;
+.dialogNoPadding {
+    padding: 0 24px;
 }

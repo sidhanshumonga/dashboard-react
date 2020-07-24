@@ -1,108 +1,74 @@
-import * as CONSTANTS from "./CONSTANTS.js";
+import { eachDayOfInterval, eachWeekOfInterval } from "date-fns";
 import moment from "moment";
 
 export const getBaseUrl = () => {
   const baseUrl = "https://who.aeturn.dev/"; //server calls
-
   return baseUrl;
 };
 
-export const makeJSDateObject = (date) => {
-  let dateTo = moment(date).format(CONSTANTS.DATE_FORMATS.WEEKLY);
-  let dateFrom = moment(date).add(7, "d").format(CONSTANTS.DATE_FORMATS.WEEKLY);
-  return dateTo + " to " + dateFrom;
+export const getDailyArray = (year) => {
+  var arrayOfDates = eachDayOfInterval({
+    start: new Date(year, 0, 1),
+    end: new Date(year, 11, 31),
+  });
+
+  return arrayOfDates.map((date) => {
+    return {
+      id: moment(date).format("YYYYMMDD"),
+      name: moment(date).format("YYYY-MM-DD"),
+    };
+  });
 };
 
-export const getStartAndEndDates = (date, type) => {
-  switch (type) {
-    case CONSTANTS.PERIOD_TYPE.WEEKLY: {
-      let dateTo = moment(date).format(CONSTANTS.DATE_FORMATS.API_FORMAT);
-      let dateFrom = moment(date)
-        .add(7, "d")
-        .format(CONSTANTS.DATE_FORMATS.API_FORMAT);
-      return { startDate: dateTo, endDate: dateFrom };
-    }
+export const getWeeklyArray = (year) => {
+  var arrayOfWeeks = eachWeekOfInterval({
+    start: new Date(year, 0, 1),
+    end: new Date(year, 11, 31),
+  });
+  return arrayOfWeeks.map((date, index) => {
+    return {
+      id: index + 1 < 10 ? "W0" + (index + 1) : "W" + (index + 1),
+      name:
+        moment(date).format("YYYY-MM-DD") +
+        " - " +
+        moment(date).add(6, "d").format("YYYY-MM-DD"),
+    };
+  });
+};
 
-    case CONSTANTS.PERIOD_TYPE.MONTHLY: {
-      let month = moment(date).format("M");
-      let year = moment(date).format("YYYY");
-      if (
-        month === "1" ||
-        month === "3" ||
-        month === "5" ||
-        month === "7" ||
-        month === "8" ||
-        month === "10" ||
-        month === "12"
-      ) {
-        if (
-          month === "1" ||
-          month === "3" ||
-          month === "5" ||
-          month === "7" ||
-          month === "8"
-        ) {
-          return {
-            startDate: "01-0" + month + '-' + year,
-            endDate: "31-0" + month + '-' + year,
-          };
-        } else {
-          return {
-            startDate: "01-" + month + '-' + year,
-            endDate: "31-" + month + '-' + year,
-          };
-        }
-      } else if (
-        month === "4" ||
-        month === "6" ||
-        month === "9" ||
-        month === "11"
-      ) {
-        if (month === "4" || month === "6" || month === "9") {
-          return {
-            startDate: "01-0" + month + '-' + year,
-            endDate: "30-0" + month + '-' + year,
-          };
-        } else {
-          return {
-            startDate: "01-" + month + '-' + year,
-            endDate: "30-" + month + '-' + year,
-          };
-        }
-      } else if (month === "2") {
-        return {
-          startDate: "01-0" + month + '-' + year,
-          endDate: "29-0" + month + '-' + year,
-        };
-      }
-      break;
-    }
-    case CONSTANTS.PERIOD_TYPE.SIX_MONTHLY: {
-      let month = moment(date).format("M");
-      let year = moment(date).format("YYYY");
-      if (month < 7) {
-        return {
-          startDate: "01-01-" + year,
-          endDate: "30-06-" + year,
-        };
-      } else {
-        return {
-          startDate: "01-07-" + year,
-          endDate: "31-12-" + year,
-        };
-      }
-    }
-    case CONSTANTS.PERIOD_TYPE.QUARTERLY: {
-      break;
-    }
-    case CONSTANTS.PERIOD_TYPE.YEARLY: {
-      let year = moment(date).format("YYYY");
-      return {
-        startDate: "01-01-" + year,
-        endDate: "31-12-" + year,
-      };
-    }
-    default: {
-    }
+export const getMonthlyArray = (months, year) => {
+  return months.map((month) => {
+    return { id: year + month.id, name: month.name + ' ' + year};
+  });
+};
+
+export const getQuarterlyArray = (quarters, year) => {
+  return quarters.map((quarter) => {
+    return { id: year + quarter.id, name: quarter.name + ' ' + year };
+  });
+};
+
+export const getSixMonthlyArray = (months, year) => {
+  return months.map((month) => {
+    return { id: year + month.id, name: month.name + ' ' + year };
+  });
+};
+
+export const getYearlyPeriodArray = (year) => {
+  var mutedYear = parseInt(year);
+  var yearsArray = [{ id: mutedYear, name: mutedYear }];
+  for (let i = 1; i < 10; i++) {
+    yearsArray.push({ id: mutedYear - i, name: mutedYear - i });
   }
+  return yearsArray;
+};
+
+export const getYearlyArray = (year) => {
+  var mutedYear = parseInt(year);
+  var yearsArray = [mutedYear];
+  for (let i = 1; i < 5; i++) {
+    yearsArray.push(mutedYear + i);
+    yearsArray.unshift(mutedYear - i);
+  }
+  return yearsArray;
 };
