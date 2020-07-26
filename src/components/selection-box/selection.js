@@ -95,7 +95,7 @@ export default function Selection() {
       date: selectedPeriod,
       orgunit_name: selectedLocation.name,
       orgunit_id: selectedLocation.id,
-      indicators: selectedIndicators.map((i) => i.name),
+      indicators: selectedIndicators.map((i) => i.id),
     };
     sendSearchParsms(payload);
     console.log(payload)
