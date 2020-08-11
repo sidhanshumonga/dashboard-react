@@ -17,7 +17,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 // import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 // import { DatePicker } from "@material-ui/pickers";
 import Location from "../dialog-box/location/location.js";
-import Period from "../dialog-box/period/period.js"
+import Period from "../dialog-box/period/period.js";
 import Slide from "@material-ui/core/Slide";
 import Loader from "../loader/loader.js";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
@@ -52,7 +52,7 @@ async function sendSearchParsms(params) {
 
 export default function Selection() {
   const [selectedPeriod, setSelectedPeriod] = React.useState([]);
-  const [selectedLocation, setSelectedLocation] = React.useState({});
+  const [selectedLocation, setSelectedLocation] = React.useState([]);
   const [selectedIndicators, setSelectedIndicators] = React.useState([]);
   const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
   const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
@@ -72,8 +72,8 @@ export default function Selection() {
   };
 
   const updatePeriod = (period) => {
-    setSelectedPeriod(period)
-  }
+    setSelectedPeriod(period);
+  };
 
   const handleClickOpen = (type) => {
     setDialogOpen(true);
@@ -81,7 +81,7 @@ export default function Selection() {
   };
 
   const handleClose = () => {
-    setSelectedLocation("");
+    setSelectedLocation([]);
     setDialogOpen(false);
   };
 
@@ -93,12 +93,11 @@ export default function Selection() {
     setChartsLoading(true);
     const payload = {
       date: selectedPeriod,
-      orgunit_name: selectedLocation.name,
-      orgunit_id: selectedLocation.id,
+      orgunit_id: selectedLocation,
       indicators: selectedIndicators.map((i) => i.id),
     };
     sendSearchParsms(payload);
-    console.log(payload)
+    console.log(payload);
   };
 
   const updateIndicatorsArray = (indicators) => {
@@ -213,17 +212,17 @@ export default function Selection() {
         <Col className="col-5 mt-3 text-left">
           <Button
             variant="contained"
-            className={"mr-2" + (selectedLocation.name ? " btn-checked" : "")}
+            className={"mr-2" + (selectedLocation.length ? " btn-checked" : "")}
             onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.LOCATION)}
           >
             <i className="material-icons">
-              {selectedLocation.name
+              {selectedLocation.length
                 ? CONSTANTS.LOGO.CHECK
                 : CONSTANTS.LOGO.ADD}
             </i>
-            {selectedLocation.name
-              ? selectedLocation.name
-              : CONSTANTS.PARAMETERS.SELECT_LOCATION}
+            {selectedLocation.length
+              ? "Location: " + selectedLocation.length + " selected"
+              : "Select Period"}
           </Button>
           <Button
             variant="contained"

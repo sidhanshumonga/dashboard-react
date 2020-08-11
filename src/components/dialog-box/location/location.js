@@ -4,7 +4,7 @@ import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
-import './location.css';
+import "./location.css";
 
 const useStyles = makeStyles({
   root: {
@@ -13,14 +13,20 @@ const useStyles = makeStyles({
     maxWidth: 400,
   },
   selected: {
-    content : {
-      background: 'blue'
-    }
-  }
+    content: {
+      background: "blue",
+    },
+  },
 });
 
 const renderTree = (nodes, func, classes) => (
-  <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name} onLabelClick={(e) => func(e, nodes)} classes={{selected: classes.selected}}>
+  <TreeItem
+    key={nodes.id}
+    nodeId={nodes.id}
+    label={nodes.name}
+    onLabelClick={(e) => func(e, nodes)}
+    classes={{ selected: classes.selected }}
+  >
     {Array.isArray(nodes.children)
       ? nodes.children.map((node) => renderTree(node, func, classes))
       : null}
@@ -29,14 +35,15 @@ const renderTree = (nodes, func, classes) => (
 
 export default function Location(props) {
   const classes = useStyles();
-  const [selectedItem, setSelectedItem] = React.useState({});
+  const [selectedItems, setSelectedItems] = React.useState([]);
 
-  const updateNode = (e,v) => {
-    e.preventDefault()
-    setSelectedItem(v);
-    props.onSelect(v);
-  }
- 
+  const updateNode = (e, v) => {
+    e.preventDefault();
+    let prevArr = selectedItems;
+    prevArr.push(v.id);
+    setSelectedItems(prevArr);
+    props.onSelect(prevArr);
+  };
 
   return (
     <TreeView
@@ -44,6 +51,7 @@ export default function Location(props) {
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpanded={["root"]}
       defaultExpandIcon={<ChevronRightIcon />}
+      multiSelect
     >
       {renderTree(props.tree, updateNode, classes)}
     </TreeView>

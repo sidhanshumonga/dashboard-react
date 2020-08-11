@@ -65,7 +65,7 @@ export default function Period(props) {
 
   const updatePeriod = (period) => {
     setChecked(period);
-    props.onSelect(period.map((x) => x.id));
+    props.onSelect(period.map((x) => '' + x.id));
   };
 
   const handleToggle = (value) => () => {
