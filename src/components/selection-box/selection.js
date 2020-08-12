@@ -23,6 +23,8 @@ import Loader from "../loader/loader.js";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import * as Utils from "../../Utils.js";
+import ChartsDiv from "../charts/charts.js";
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -36,24 +38,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-async function sendSearchParsms(params) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(params),
-  };
-  const response = await fetch(
-    Utils.getBaseUrl() + CONSTANTS.postSearchReq,
-    requestOptions
-  );
-  const data = await response.json();
-  console.log(data);
-}
-
 export default function Selection() {
   const [selectedPeriod, setSelectedPeriod] = React.useState([]);
   const [selectedLocation, setSelectedLocation] = React.useState([]);
   const [selectedIndicators, setSelectedIndicators] = React.useState([]);
+  const [chartData, setChartData] = React.useState([]);
   const [AutocompleteOpen, setAutocompleteOpen] = React.useState(false);
   const [AutocompleteOptions, setAutocompleteOptions] = React.useState([]);
   const indicatorsLoading =
@@ -89,6 +78,22 @@ export default function Selection() {
     setDialogOpen(false);
   };
 
+  const sendSearchParams = async (params) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(params),
+    };
+    const response = await fetch(
+      Utils.getBaseUrl() + CONSTANTS.postSearchReq,
+      requestOptions
+    );
+    const data = await response.json();
+
+    console.log(JSON.parse(data).data);
+    setChartData(JSON.parse(data).data);
+  };
+
   const loadingStart = () => {
     setChartsLoading(true);
     const payload = {
@@ -96,8 +101,7 @@ export default function Selection() {
       orgunit_id: selectedLocation,
       indicators: selectedIndicators.map((i) => i.id),
     };
-    sendSearchParsms(payload);
-    console.log(payload);
+    sendSearchParams(payload);
   };
 
   const updateIndicatorsArray = (indicators) => {
@@ -222,7 +226,7 @@ export default function Selection() {
             </i>
             {selectedLocation.length
               ? "Location: " + selectedLocation.length + " selected"
-              : "Select Period"}
+              : "Select Location"}
           </Button>
           <Button
             variant="contained"
@@ -287,7 +291,11 @@ export default function Selection() {
 
       <Row className="justify-content-center mt-5">
         <Col className="col-10 charts-container">
-          {chartsLoading ? <Loader className="loader-div"></Loader> : null}
+          {chartsLoading && chartData.length === 0 ? (
+            <Loader className="loader-div"></Loader>
+          ) : chartData.length !== 0 ? (
+            <ChartsDiv chartData={chartData} />
+          ) : null}
         </Col>
       </Row>
     </div>
