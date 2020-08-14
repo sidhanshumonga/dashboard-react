@@ -1,0 +1,48 @@
+.footer-container {
+  background-color: #008dc9;
+}
+
+.links-list-ul {
+    list-style-type: none;
+    color: white;
+    width: 100%;
+}
+
+.links-list-li {
+    padding: 5px 0;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.links-list-li-header {
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.button-dark-background {
+    background-color: #3c4245 !important;
+    /* height:40px; */
+    padding: 10px 30px;
+    color: #fff;
+    display: inline-block;
+    margin: 20px 0;
+    border: 2px solid #3c4245;
+    border-radius: 4px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.home-logo {
+    height: 100px;
+    width: 327px;
+}

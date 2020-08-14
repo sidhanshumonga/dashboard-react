@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.css';
-import Topbar from './components/topbar/topbar.js'
+import Header from './components/header/header.js'
+import Footer from './components/footer/footer.js'
+import BottomFooter from './components/footer/bottom-footer.js'
 import Selection from './components/selection-box/selection.js'
 function App() {
   return (
     <div className="App">
-      <Topbar></Topbar>
+      <Header></Header>
       <Selection></Selection>
+      <Footer></Footer>
+      <BottomFooter />
     </div>
   );
 }

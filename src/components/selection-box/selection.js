@@ -247,7 +247,7 @@ export default function Selection() {
           <Col className="mx-2 mt-1">Clear dashboard</Col>
           <Button
             variant="contained"
-            className="btn-primary"
+            className="btn-primary btn-add"
             onClick={() => loadingStart()}
           >
             Add

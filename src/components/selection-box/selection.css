@@ -20,3 +20,7 @@ button:focus {
 .dialogNoPadding {
     padding: 0 24px;
 }
+
+.btn-add {
+    background-color:#008dc9 !important;
+}
