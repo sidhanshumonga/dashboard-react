@@ -61,7 +61,7 @@ export default function PieChart(props) {
     pieSeries.dataFields.value = "value";
 
     // chart.innerRadius = am4core.percent(40);
-   
+
     pieSeries.labels.template.disabled = true;
     pieSeries.ticks.template.disabled = true;
     // chart.legend = new am4charts.Legend();
@@ -73,10 +73,12 @@ export default function PieChart(props) {
   return (
     <div style={{ display: "flex" }}>
       <div
+        className="p-3"
         id="piechartByLocation"
         style={{ width: "100%", height: "500px" }}
       ></div>
       <div
+        className="p-3"
         id="piechartByPeriod"
         style={{ width: "100%", height: "500px" }}
       ></div>

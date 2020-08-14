@@ -3,7 +3,7 @@ import "./bottom-footer.css";
 
 export default function BottomFooter() {
   return (
-    <div className="row bottom-footer-container">
+    <div className="row bottom-footer-container mx-0">
       <div className="col-md-4 text-left col-text pl-4">
         Privacy Legal Notice
       </div>

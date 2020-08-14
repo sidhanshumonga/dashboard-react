@@ -3,6 +3,20 @@
     color: white !important;
     outline: none !important;
 }
+
+.gradient-div {
+    background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    transition: all 0.5s ease-in-out;
+}
+
+/* .gradient-div:hover {
+    height: 150px;
+} */
+
+.selection-btn {
+    background: rgba(148,187,233,1) !important;
+}
+
 button:focus {
     outline: none !important;
 }
@@ -13,7 +27,8 @@ button:focus {
 }
 
 .charts-container {
-    height: 70vh;
+    height: auto;
+    min-height: 40vh
     /* border: 1px solid black; */
 }
 
@@ -23,4 +38,15 @@ button:focus {
 
 .btn-add {
     background-color:#008dc9 !important;
+}
+
+
+.charts-text {
+    font-size: 20px;
+    /* font-weight: bold; */
+}
+
+.clear-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

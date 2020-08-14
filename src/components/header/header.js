@@ -6,7 +6,7 @@ import "./header.css";
 
 export default function Header() {
   return (
-    <div>
+    <div className="mx-0">
       <div className="header-logo text-left">
         <a className="logo-link">
           <img className="logo-link" src={require("../../assets/path.png")} />

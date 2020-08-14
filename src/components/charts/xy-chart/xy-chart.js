@@ -7,7 +7,7 @@ am4core.useTheme(am4themes_animated);
 
 export default function XYchart(props) {
   const chart = useRef(null);
-  const data = props.data
+  const data = props.data;
 
   useLayoutEffect(() => {
     let chart = am4core.create("xychartByLocation", am4charts.XYChart);
@@ -34,7 +34,7 @@ export default function XYchart(props) {
     series1.dataFields.valueInd = "indicator";
     series1.dataFields.valuePer = "period";
     series1.dataFields.categoryX = "location";
-    
+
     series1.columns.template.width = am4core.percent(50);
     chart.cursor = new am4charts.XYCursor();
     return () => {
@@ -61,7 +61,7 @@ export default function XYchart(props) {
     let series1 = chart.series.push(new am4charts.ColumnSeries());
     series1.name = "Trend";
     series1.columns.template.tooltipText =
-      "series: {name}\nPeriod: {categoryX}\nvalue: {valueY}\Indicator Name: {indicator}\nLocation: {valueLoc}";
+      "series: {name}\nPeriod: {categoryX}\nvalue: {valueY}Indicator Name: {indicator}\nLocation: {valueLoc}";
     series1.columns.template.fill = am4core.color("#104547"); // fill
     series1.dataFields.valueY = "value";
     series1.dataFields.valueInd = "indicator";
@@ -76,12 +76,14 @@ export default function XYchart(props) {
   }, [data]);
 
   return (
-    <div style={{display:'flex'}}>
+    <div style={{ display: "flex" }}>
       <div
+        className="p-3"
         id="xychartByLocation"
         style={{ width: "100%", height: "500px" }}
       ></div>
       <div
+        className="p-3"
         id="xychartByPeriod"
         style={{ width: "100%", height: "500px" }}
       ></div>

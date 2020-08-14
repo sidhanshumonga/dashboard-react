@@ -78,6 +78,15 @@ export default function Selection() {
     setDialogOpen(false);
   };
 
+  const resetState = () => {
+    setSelectedPeriod([])
+    setSelectedLocation([])
+    setChartData([])
+    setAutocompleteOptions([])
+    setSelectedIndicators([])
+    setChartsLoading(false)
+  }
+
   const sendSearchParams = async (params) => {
     const requestOptions = {
       method: "POST",
@@ -90,14 +99,14 @@ export default function Selection() {
     );
     const data = await response.json();
 
-    console.log(JSON.parse(data).data);
+    // console.log(JSON.parse(data).data);
     setChartData(JSON.parse(data).data);
   };
 
   const loadingStart = () => {
     setChartsLoading(true);
     const payload = {
-      date: selectedPeriod,
+      date: selectedPeriod.map((x) => '' + x.id),
       orgunit_id: selectedLocation,
       indicators: selectedIndicators.map((i) => i.id),
     };
@@ -156,146 +165,153 @@ export default function Selection() {
 
   return (
     <div>
-      <Row className="justify-content-center align-items-center">
-        <Col className="col-8 mt-5">
-          <Form>
-            <Autocomplete
-              id="asynchronous-demo"
-              multiple
-              freeSolo
-              open={AutocompleteOpen}
-              onOpen={() => {
-                setAutocompleteOpen(true);
-              }}
-              onClose={() => {
-                setAutocompleteOpen(false);
-              }}
-              getOptionSelected={(option, value) => option.name === value.name}
-              getOptionLabel={(option) => option.name}
-              options={AutocompleteOptions}
-              disableCloseOnSelect
-              loading={indicatorsLoading}
-              onChange={(event, value) => updateIndicatorsArray(value)}
-              renderOption={(option, { selected }) => (
-                <React.Fragment>
-                  <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
+      <div className="px-5 pb-5 gradient-div">
+        <Row className="justify-content-center align-items-center">
+          <Col className="col-8 mt-5">
+            <Form>
+              <Autocomplete
+                id="asynchronous-demo"
+                multiple
+                freeSolo
+                open={AutocompleteOpen}
+                onOpen={() => {
+                  setAutocompleteOpen(true);
+                }}
+                onClose={() => {
+                  setAutocompleteOpen(false);
+                }}
+                getOptionSelected={(option, value) =>
+                  option.name === value.name
+                }
+                getOptionLabel={(option) => option.name}
+                options={AutocompleteOptions}
+                disableCloseOnSelect
+                loading={indicatorsLoading}
+                onChange={(event, value) => updateIndicatorsArray(value)}
+                renderOption={(option, { selected }) => (
+                  <React.Fragment>
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.name}
+                    <Col className="text-right periodTypeInList">
+                      {option.periodType}
+                    </Col>
+                  </React.Fragment>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Search Indicators"
+                    variant="outlined"
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {indicatorsLoading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
                   />
-                  {option.name}
-                  <Col className="text-right periodTypeInList">
-                    {option.periodType}
-                  </Col>
-                </React.Fragment>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search Indicators"
-                  variant="outlined"
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <React.Fragment>
-                        {indicatorsLoading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </React.Fragment>
-                    ),
-                  }}
-                />
-              )}
-            />
-          </Form>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col className="col-5 mt-3 text-left">
-          <Button
-            variant="contained"
-            className={"mr-2" + (selectedLocation.length ? " btn-checked" : "")}
-            onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.LOCATION)}
-          >
-            <i className="material-icons">
+                )}
+              />
+            </Form>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col className="col-5 mt-3 text-left">
+            <Button
+              variant="contained"
+              className={
+                "mr-2 selection-btn" + (selectedLocation.length ? " btn-checked" : "")
+              }
+              onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.LOCATION)}
+            >
+              <i className="material-icons">
+                {selectedLocation.length
+                  ? CONSTANTS.LOGO.CHECK
+                  : CONSTANTS.LOGO.ADD}
+              </i>
               {selectedLocation.length
-                ? CONSTANTS.LOGO.CHECK
-                : CONSTANTS.LOGO.ADD}
-            </i>
-            {selectedLocation.length
-              ? "Location: " + selectedLocation.length + " selected"
-              : "Select Location"}
-          </Button>
-          <Button
-            variant="contained"
-            className={"mx-2" + (selectedPeriod.length ? " btn-checked" : "")}
-            onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.DATE)}
-          >
-            <i className="material-icons">
+                ? "Location: " + selectedLocation.length + " selected"
+                : "Select Location"}
+            </Button>
+            <Button
+              variant="contained"
+              className={"mx-2 selection-btn" + (selectedPeriod.length ? " btn-checked" : "")}
+              onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.DATE)}
+            >
+              <i className="material-icons">
+                {selectedPeriod.length
+                  ? CONSTANTS.LOGO.CHECK
+                  : CONSTANTS.LOGO.ADD}
+              </i>
               {selectedPeriod.length
-                ? CONSTANTS.LOGO.CHECK
-                : CONSTANTS.LOGO.ADD}
-            </i>
-            {selectedPeriod.length
-              ? "Period: " + selectedPeriod.length + " selected"
-              : "Select Period"}
-          </Button>
-        </Col>
-        <Col className="col-3 text-right mt-3 d-flex justify-content-end">
-          <Col className="mx-2 mt-1">Clear dashboard</Col>
-          <Button
-            variant="contained"
-            className="btn-primary btn-add"
-            onClick={() => loadingStart()}
-          >
-            Add
-          </Button>
-        </Col>
-      </Row>
-      <Dialog
-        open={DialogOpen}
-        onClose={handleClose}
-        fullWidth={true}
-        maxWidth="sm"
-        className="dialogNoPadding"
-        TransitionComponent={Transition}
-        scroll={"paper"}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-      >
-        <DialogTitle id="scroll-dialog-title">
-          {DialogType === CONSTANTS.DIALOG_TYPE.LOCATION
-            ? CONSTANTS.PARAMETERS.SELECT_LOCATION
-            : CONSTANTS.PARAMETERS.SELECT_PERIOD}
-        </DialogTitle>
-        <DialogContent dividers={true}>
-          <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            {DialogType === CONSTANTS.DIALOG_TYPE.LOCATION ? (
-              <Location onSelect={updateLocation} tree={tree}></Location>
-            ) : (
-              <Period onSelect={updatePeriod}></Period>
-            )}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSave} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-
+                ? "Period: " + selectedPeriod.length + " selected"
+                : "Select Period"}
+            </Button>
+          </Col>
+          <Col className="col-3 text-right mt-3 d-flex justify-content-end">
+            <Col className="mx-2 mt-1 clear-link" onClick={resetState}>
+              <i className="material-icons" style={{verticalAlign: "bottom"}}>close</i>
+              Clear dashboard</Col>
+            <Button
+              variant="contained"
+              className="btn-primary btn-add"
+              onClick={() => loadingStart()}
+            >
+              Add
+            </Button>
+          </Col>
+        </Row>
+        <Dialog
+          open={DialogOpen}
+          onClose={handleClose}
+          fullWidth={true}
+          maxWidth="sm"
+          className="dialogNoPadding"
+          TransitionComponent={Transition}
+          scroll={"paper"}
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+        >
+          <DialogTitle id="scroll-dialog-title">
+            {DialogType === CONSTANTS.DIALOG_TYPE.LOCATION
+              ? CONSTANTS.PARAMETERS.SELECT_LOCATION
+              : CONSTANTS.PARAMETERS.SELECT_PERIOD}
+          </DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+              {DialogType === CONSTANTS.DIALOG_TYPE.LOCATION ? (
+                <Location onSelect={updateLocation} selected={selectedLocation} tree={tree}></Location>
+              ) : (
+                <Period onSelect={updatePeriod} selected={selectedPeriod}></Period>
+              )}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSave} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
       <Row className="justify-content-center mt-5">
         <Col className="col-10 charts-container">
           {chartsLoading && chartData.length === 0 ? (
             <Loader className="loader-div"></Loader>
           ) : chartData.length !== 0 ? (
             <ChartsDiv chartData={chartData} />
-          ) : null}
+          ) : <p className="charts-text">PLEASE MAKE SELECTION TO DISPLAY CHARTS</p>}
         </Col>
       </Row>
     </div>

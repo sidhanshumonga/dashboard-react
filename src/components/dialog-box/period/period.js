@@ -52,7 +52,7 @@ const useStyles = makeStyles({
 export default function Period(props) {
   const classes = useStyles();
 
-  const [checked, setChecked] = React.useState([]);
+  const [checked, setChecked] = React.useState(props.selected);
   const [selectedPeriodType, setSelectedPeriodType] = React.useState("m");
   const [openYearSelect, setOpenYearSelect] = React.useState(false);
   const [selectedYear, setSelectedYear] = React.useState(
@@ -65,7 +65,7 @@ export default function Period(props) {
 
   const updatePeriod = (period) => {
     setChecked(period);
-    props.onSelect(period.map((x) => '' + x.id));
+    props.onSelect(period);
   };
 
   const handleToggle = (value) => () => {

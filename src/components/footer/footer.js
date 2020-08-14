@@ -3,7 +3,7 @@ import "./footer.css";
 
 export default function Footer() {
   return (
-    <div className="footer-container row">
+    <div className="footer-container row mx-0">
       <div className="col-md-9 d-inline-flex pl-3 pt-5 pb-3 text-left">
         <ul className="links-list-ul">
           <li className="links-list-li links-list-li-header">What we do</li>
