@@ -71,7 +71,7 @@ export default function PieChart(props) {
   }, [data]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="m-3" style={{ display: "flex" }}>
       <div
         className="p-3"
         id="piechartByLocation"
