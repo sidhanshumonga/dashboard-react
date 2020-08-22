@@ -1,0 +1,20 @@
+.btn-outline-secondary:not(:disabled):not(.disabled).active, .btn-outline-secondary:hover {
+    background:#008dc9 !important;
+}
+
+.btn-outline-secondary:hover {
+    background:#46a9d4 !important;
+ }
+
+.btn-outline-secondary {
+    border-color: #008dc9 !important; 
+}
+
+.btn-outline-secondary:not(.active):not(:hover) {
+    color: #008dc9 !important; 
+}
+
+.btn-outline-secondary.focus, .btn-outline-secondary.active {
+    outline: none !important;
+    box-shadow: none !important;
+}

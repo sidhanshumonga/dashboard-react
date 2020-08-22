@@ -15,6 +15,14 @@
     position: sticky;
   }
   
+.data-portal {
+  color: #008dc9;
+  font-style:Arial,Helvetica,sans-serif;
+  font-size: 30px;
+  line-height: 2.08;
+  margin:0;
+}
+
 .nav-links {
     color: white !important;
     padding: 5px 30px 5px 20px !important;

@@ -1,29 +1,32 @@
-import React from "react";
-import { Form, Row, Col } from "react-bootstrap";
-import Button from "@material-ui/core/Button";
 import "./selection.css";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
+
 import * as CONSTANTS from "../../CONSTANTS.js";
+import * as Utils from "../../Utils.js";
+
+import { Col, Form, Row } from "react-bootstrap";
+
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Button from "@material-ui/core/Button";
+import ChartsDiv from "../charts/charts.js";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import Checkbox from "@material-ui/core/Checkbox";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Checkbox from "@material-ui/core/Checkbox";
-import DialogActions from "@material-ui/core/DialogActions";
+import Loader from "../loader/loader.js";
 // import moment from "moment";
 // import MomentUtils from "@date-io/moment";
 // import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 // import { DatePicker } from "@material-ui/pickers";
 import Location from "../dialog-box/location/location.js";
 import Period from "../dialog-box/period/period.js";
+import React from "react";
 import Slide from "@material-ui/core/Slide";
-import Loader from "../loader/loader.js";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import * as Utils from "../../Utils.js";
-import ChartsDiv from "../charts/charts.js";
+import TextField from "@material-ui/core/TextField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -79,13 +82,13 @@ export default function Selection() {
   };
 
   const resetState = () => {
-    setSelectedPeriod([])
-    setSelectedLocation([])
-    setChartData([])
-    setAutocompleteOptions([])
-    setSelectedIndicators([])
-    setChartsLoading(false)
-  }
+    setSelectedPeriod([]);
+    setSelectedLocation([]);
+    setChartData([]);
+    setAutocompleteOptions([]);
+    setSelectedIndicators([]);
+    setChartsLoading(false);
+  };
 
   const sendSearchParams = async (params) => {
     const requestOptions = {
@@ -106,7 +109,7 @@ export default function Selection() {
   const loadingStart = () => {
     setChartsLoading(true);
     const payload = {
-      date: selectedPeriod.map((x) => '' + x.id),
+      date: selectedPeriod.map((x) => "" + x.id),
       orgunit_id: selectedLocation,
       indicators: selectedIndicators.map((i) => i.id),
     };
@@ -229,7 +232,8 @@ export default function Selection() {
             <Button
               variant="contained"
               className={
-                "mr-2 selection-btn" + (selectedLocation.length ? " btn-checked" : "")
+                "mr-2 selection-btn" +
+                (selectedLocation.length ? " btn-checked" : "")
               }
               onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.LOCATION)}
             >
@@ -244,7 +248,10 @@ export default function Selection() {
             </Button>
             <Button
               variant="contained"
-              className={"mx-2 selection-btn" + (selectedPeriod.length ? " btn-checked" : "")}
+              className={
+                "mx-2 selection-btn" +
+                (selectedPeriod.length ? " btn-checked" : "")
+              }
               onClick={() => handleClickOpen(CONSTANTS.DIALOG_TYPE.DATE)}
             >
               <i className="material-icons">
@@ -259,8 +266,11 @@ export default function Selection() {
           </Col>
           <Col className="col-3 text-right mt-3 d-flex justify-content-end">
             <Col className="mx-2 mt-1 clear-link" onClick={resetState}>
-              <i className="material-icons" style={{verticalAlign: "bottom"}}>close</i>
-              Clear dashboard</Col>
+              <i className="material-icons" style={{ verticalAlign: "bottom" }}>
+                close
+              </i>
+              Clear dashboard
+            </Col>
             <Button
               variant="contained"
               className="btn-primary btn-add"
@@ -289,9 +299,16 @@ export default function Selection() {
           <DialogContent dividers={true}>
             <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
               {DialogType === CONSTANTS.DIALOG_TYPE.LOCATION ? (
-                <Location onSelect={updateLocation} selected={selectedLocation} tree={tree}></Location>
+                <Location
+                  onSelect={updateLocation}
+                  selected={selectedLocation}
+                  tree={tree}
+                ></Location>
               ) : (
-                <Period onSelect={updatePeriod} selected={selectedPeriod}></Period>
+                <Period
+                  onSelect={updatePeriod}
+                  selected={selectedPeriod}
+                ></Period>
               )}
             </DialogContentText>
           </DialogContent>
@@ -306,12 +323,12 @@ export default function Selection() {
         </Dialog>
       </div>
       <Row className="justify-content-center mt-5">
-        <Col className="col-10 charts-container">
-          {chartsLoading && chartData.length === 0 ? (
+        <Col className="col-11 charts-container">
+          {/* {chartsLoading && chartData.length === 0 ? (
             <Loader className="loader-div"></Loader>
-          ) : chartData.length !== 0 ? (
-            <ChartsDiv chartData={chartData} />
-          ) : <p className="charts-text">PLEASE MAKE SELECTION TO DISPLAY CHARTS</p>}
+          ) : chartData.length !== 0 ? ( */}
+          <ChartsDiv chartData={chartData} indicators={selectedIndicators} periods={selectedPeriod} />
+          {/* ) : <p className="charts-text">PLEASE MAKE SELECTION TO DISPLAY CHARTS</p>} */}
         </Col>
       </Row>
     </div>

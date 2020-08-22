@@ -7,15 +7,17 @@ import "./header.css";
 export default function Header() {
   return (
     <div className="mx-0">
-      <div className="header-logo text-left">
+      <div className="header-logo justify-content-between d-inline-flex w-100">
         <a className="logo-link">
           <img className="logo-link" src={require("../../assets/path.png")} />
         </a>
+        <p className="data-portal">OPEN DATA PORTAL</p>
       </div>
       <Navbar sticky="top" className="header-container px-5">
         <Navbar.Brand href="#home">
           <img className="home-link" src={require("../../assets/home.svg")} />
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">

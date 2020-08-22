@@ -1,0 +1,20 @@
+.cards {
+  height: 120px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  background: #ff0057;
+  font-size: 34px;
+  border-radius: 6px;
+}
+
+.card1 {
+  background: #e7afcc;
+}
+
+.card2 {
+    background:#c3b6d9
+}
+
+.card3 {
+    background:#9bbae6
+}

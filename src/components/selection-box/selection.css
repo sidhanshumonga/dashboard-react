@@ -28,7 +28,7 @@ button:focus {
 
 .charts-container {
     height: auto;
-    min-height: 40vh
+    min-height: 20vh
     /* border: 1px solid black; */
 }
 
