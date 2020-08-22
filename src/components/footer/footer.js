@@ -42,6 +42,7 @@ export default function Footer() {
         <img
           className="home-logo"
           src={require("../../assets/home-logo.svg")}
+          alt={"home"}
         />
       </div>
     </div>

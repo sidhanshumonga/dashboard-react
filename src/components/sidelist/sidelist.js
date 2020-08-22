@@ -7,9 +7,9 @@ import "./sidelist.css"
 
 export default function SideList(props) {
   const [checked, setChecked] = React.useState(props.data);
-  const [type, settype] = React.useState(props.type);
-  const [clicked, setClicked] = React.useState(false);
-  const data = props.data;
+  const [expanded, setExpanded] = React.useState(false)
+  const [type] = React.useState(props.type);
+  const [, setClicked] = React.useState(false);
   const handleToggle = (value) => () => {
     setClicked(true);
     const currentIndex = checked.findIndex((i) => i.id === value.id);
@@ -29,7 +29,7 @@ export default function SideList(props) {
     if (type !== props.type) {
       setChecked(props.data);
     }
-  }, [props.type]);
+  }, [type, props.type, props.data]);
 
   return (
     <div
@@ -40,13 +40,22 @@ export default function SideList(props) {
         borderRadius: 6,
       }}
     >
-      <div className="p-2" style={{ background: "#008dc9", color: "white" }}>
+      <div className="p-2" style={{
+        background: "#008dc9", color: "white",
+        borderTopLeftRadius: 4,
+        borderTopRightRadius: 4,
+        cursor: "pointer"
+      }} onClick={() => setExpanded(!expanded)}>
         {props.type}
+        <i className={"material-icons add-icon"}>{expanded ? "remove" : "add"}</i>
       </div>
       <List
         style={{
-          height: "250px",
+          height: expanded ? "250px" : "0px",
+          paddingTop: expanded ? "8px" : "0px",
+          paddingBottom: expanded ? "8px" : "0px",
           overflow: "auto",
+          transition: "all 0.4s ease-in-out"
         }}
       >
         {props.data.map((value, index) => {

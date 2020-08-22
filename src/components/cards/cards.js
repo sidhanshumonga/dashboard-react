@@ -22,18 +22,7 @@ export default function Cards() {
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [countries]);
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      if (indicators >= randomI) {
-        clearInterval(interval);
-      } else {
-        setIndicator(indicators + 1);
-      }
-    }, 70);
-    return () => clearInterval(interval);
-  }, [indicators]);
+  });
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -44,7 +33,19 @@ export default function Cards() {
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [reporting]);
+  });
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (indicators >= randomI) {
+        clearInterval(interval);
+      } else {
+        setIndicator(indicators + 1);
+      }
+    }, 70);
+    return () => clearInterval(interval);
+  });
+
 
   return (
     <div className="row justify-content-around mx-5 mt-4 mb-5">

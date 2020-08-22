@@ -1,14 +1,8 @@
-import * as am4charts from "@amcharts/amcharts4/charts";
-import * as am4core from "@amcharts/amcharts4/core";
-
 import PieChart from "./pie-chart/pie-chart.js";
 import React from "react";
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import XYchart from "./xy-chart/xy-chart.js";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-
-am4core.useTheme(am4themes_animated);
 
 export default function ChartsDiv(props) {
   const data = props.chartData.map((x) => {

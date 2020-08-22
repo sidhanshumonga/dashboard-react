@@ -11,7 +11,6 @@ import moment from "moment";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import * as UTILS from "../../../Utils.js";
 import Icon from "@material-ui/core/Icon";
@@ -143,6 +142,7 @@ export default function Period(props) {
         setPeriodArray(UTILS.getYearlyPeriodArray(selectedYear));
         break;
       }
+      default: {}
     }
   }, [selectedPeriodType, selectedYear]);
 

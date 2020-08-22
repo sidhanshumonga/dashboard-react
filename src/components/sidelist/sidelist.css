@@ -1,3 +1,8 @@
 .MuiCheckbox-colorSecondary.Mui-checked {
     color: #008dc9 !important;
 }
+
+.add-icon {
+    float: right;
+    cursor: pointer;
+}

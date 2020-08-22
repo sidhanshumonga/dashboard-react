@@ -1,7 +1,7 @@
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect } from "react";
 
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
@@ -26,16 +26,16 @@ export default function XYchart(props) {
     { name: "Non-stacked", value: "nstacked" },
   ];
 
-  const indicators = [
-    "Anaemia follow-up",
-    "ANC 2nd visit",
-    "ANC 1st visit",
-    "Anaemia new",
-    "Accute Flaccid Paralysis (Deaths < 5 yrs)",
-    "Acute Flaccid Paralysis (AFP) referrals",
-    "Acute Flaccid Paralysis (AFP) new",
-    "Acute Flaccid Paralysis (AFP) follow-up",
-  ];
+  // const indicators = [
+  //   "Anaemia follow-up",
+  //   "ANC 2nd visit",
+  //   "ANC 1st visit",
+  //   "Anaemia new",
+  //   "Accute Flaccid Paralysis (Deaths < 5 yrs)",
+  //   "Acute Flaccid Paralysis (AFP) referrals",
+  //   "Acute Flaccid Paralysis (AFP) new",
+  //   "Acute Flaccid Paralysis (AFP) follow-up",
+  // ];
 
   const selectedLocations = [
     { id: "eIQbndfxQMb", name: "Tonkolili" },
@@ -59,7 +59,7 @@ export default function XYchart(props) {
     { id: "2020S1", name: "Jan- Jun 2020" },
   ];
   const periodsMap = {};
-  selectedPeriods.map((x) => {
+  selectedPeriods.forEach((x) => {
     periodsMap[x.id] = x.name;
   });
 
@@ -2780,22 +2780,6 @@ export default function XYchart(props) {
     return Object.values(mutedArr);
   };
 
-  const checkIndicators = (arr) => {
-    let mutedArr = [];
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < indicators.length; j++) {
-        if (arr[i][indicators[j]] === undefined) {
-          arr[i][indicators[j]] = 1;
-        }
-      }
-      if (arr[i]["period"]) {
-        arr[i]["period"] = periodsMap[arr[i]["period"]];
-      }
-    }
-    // console.log(arr);
-    return arr;
-  };
-
   const createSeries = (chart, name, type) => {
     var series = chart.series.push(new am4charts.ColumnSeries());
     if (selectedChartType === "vertical") {
@@ -2825,21 +2809,21 @@ export default function XYchart(props) {
     });
     chart.legend = new am4charts.Legend();
     chart.legend.position = "bottom";
-
+    var categoryAxis, valueAxis;
     if (selectedChartType === "vertical") {
-      var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
       categoryAxis.dataFields.category = selectedType;
       categoryAxis.renderer.grid.template.location = 0;
 
-      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       categoryAxis.renderer.minGridDistance = 20;
     } else {
       // Create axes
-      var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+      categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
       categoryAxis.dataFields.category = selectedType;
       categoryAxis.renderer.grid.template.opacity = 0;
 
-      var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+      valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
       valueAxis.min = 1;
       valueAxis.renderer.ticks.template.length = 12;
       valueAxis.renderer.minGridDistance = 70;
@@ -2863,7 +2847,7 @@ export default function XYchart(props) {
     return () => {
       chart.dispose();
     };
-  }, [data, selectedChartType, selectedStackType]);
+  });
 
   return (
     <div className="m-3">
@@ -2934,12 +2918,12 @@ export default function XYchart(props) {
               onSelect={handleDisplayedLocationArrayChange}
             ></SideList>
           ) : (
-            <SideList
-              data={selectedPeriods}
-              type={"Selected periods"}
-              onSelect={handleDisplayedPeriodArrayChange}
-            ></SideList>
-          )}
+              <SideList
+                data={selectedPeriods}
+                type={"Selected periods"}
+                onSelect={handleDisplayedPeriodArrayChange}
+              ></SideList>
+            )}
         </div>
       </div>
     </div>

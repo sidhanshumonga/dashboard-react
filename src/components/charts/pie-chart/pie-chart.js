@@ -4,13 +4,6 @@ import * as am4core from "@amcharts/amcharts4/core";
 import React, { useLayoutEffect } from "react";
 
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import SideList from "../../sidelist/sidelist.js";
@@ -2790,13 +2783,7 @@ export default function PieChart(props) {
     return () => {
       chart.dispose();
     };
-  }, [
-    data,
-    selectedType,
-    selectedChartType,
-    displayedLocationArray,
-    displayedPeriodArray,
-  ]);
+  });
 
   return (
     <div className="m-3">

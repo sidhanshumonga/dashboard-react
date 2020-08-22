@@ -17,11 +17,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Loader from "../loader/loader.js";
-// import moment from "moment";
-// import MomentUtils from "@date-io/moment";
-// import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-// import { DatePicker } from "@material-ui/pickers";
 import Location from "../dialog-box/location/location.js";
 import Period from "../dialog-box/period/period.js";
 import React from "react";
@@ -31,11 +26,6 @@ import TextField from "@material-ui/core/TextField";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -55,7 +45,7 @@ export default function Selection() {
   const [DialogType, setDialogType] = React.useState(
     CONSTANTS.DIALOG_TYPE.LOCATION
   );
-  const [chartsLoading, setChartsLoading] = React.useState(false);
+  const [, setChartsLoading] = React.useState(false);
 
   const [tree, setData] = React.useState({});
 
