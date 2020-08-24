@@ -3,6 +3,8 @@ import React from "react";
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import XYchart from "./xy-chart/xy-chart.js";
+import LineChart from "./line-chart/line-chart.js";
+import TableChart from './table/table.js'
 
 export default function ChartsDiv(props) {
   const data = props.chartData.map((x) => {
@@ -11,15 +13,20 @@ export default function ChartsDiv(props) {
 
   return (
     <div style={{ display: "block" }}>
-      <Tabs defaultActiveKey="xyChart" id="uncontrolled-tab-example">
+      <Tabs defaultActiveKey="tableChart" id="uncontrolled-tab-example">
+        <Tab eventKey="tableChart" title="Table">
+          <TableChart />
+        </Tab>
         <Tab eventKey="xyChart" title="XY-Chart">
-          <XYchart data={data} indicators={props.indicators} periods={props.periods}/>
+          <XYchart data={data} indicators={props.indicators} periods={props.periods} />
         </Tab>
         <Tab eventKey="pieChart" title="Pie Chart">
-          <PieChart data={data}></PieChart>
+          <PieChart data={data} indicators={props.indicators} periods={props.periods}></PieChart>
+        </Tab>
+        <Tab eventKey="lineChart" title="Line Chart">
+          <LineChart data={data} indicators={props.indicators} periods={props.periods}></LineChart>
         </Tab>
         <Tab eventKey="pointChart" title="Point Chart" disabled></Tab>
-        <Tab eventKey="lineChart" title="Line Chart" disabled></Tab>
       </Tabs>
     </div>
   );
