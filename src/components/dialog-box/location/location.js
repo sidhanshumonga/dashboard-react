@@ -45,11 +45,11 @@ export default function Location(props) {
     var node = ReactDOM.findDOMNode(
       inputEl.current.filter((x) => x.id === v.id)[0].ref
     );
-    if (prevArr.indexOf(v.id) === -1) {
-      prevArr.push(v.id);
+    if (prevArr.findIndex(x => x.id === v.id) === -1) {
+      prevArr.push({ id: v.id, name: v.name });
       node.classList.add("Mui-selected");
     } else {
-      prevArr.splice(prevArr.indexOf(v.id), 1);
+      prevArr.splice(prevArr.findIndex(x => x.id === v.id), 1);
       node.classList.remove("Mui-selected");
     }
     setSelectedItems(prevArr);

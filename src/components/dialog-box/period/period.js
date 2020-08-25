@@ -68,11 +68,11 @@ export default function Period(props) {
   };
 
   const handleToggle = (value) => () => {
-    const currentIndex = checked.findIndex((i) => i.id === value.id);
+    const currentIndex = checked.findIndex((i) => ("" + i.id) === ("" + value.id));
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push({ id: "" + value.id, name: "" + value.name });
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -142,7 +142,7 @@ export default function Period(props) {
         setPeriodArray(UTILS.getYearlyPeriodArray(selectedYear));
         break;
       }
-      default: {}
+      default: { }
     }
   }, [selectedPeriodType, selectedYear]);
 
@@ -207,7 +207,7 @@ export default function Period(props) {
                         tabIndex={-1}
                         disableRipple
                         checked={
-                          checked.findIndex((j) => j.id === value.id) !== -1
+                          checked.findIndex((j) => ("" + j.id) === ("" + value.id)) !== -1
                         }
                       />
                     </ListItemIcon>

@@ -22,6 +22,7 @@ import Period from "../dialog-box/period/period.js";
 import React from "react";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
+import Loader from '../loader/loader.js'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -45,7 +46,7 @@ export default function Selection() {
   const [DialogType, setDialogType] = React.useState(
     CONSTANTS.DIALOG_TYPE.LOCATION
   );
-  const [, setChartsLoading] = React.useState(false);
+  const [chartsLoading, setChartsLoading] = React.useState(false);
 
   const [tree, setData] = React.useState({});
 
@@ -100,7 +101,7 @@ export default function Selection() {
     setChartsLoading(true);
     const payload = {
       date: selectedPeriod.map((x) => "" + x.id),
-      orgunit_id: selectedLocation,
+      orgunit_id: selectedLocation.map((x) => x.id),
       indicators: selectedIndicators.map((i) => i.id),
     };
     sendSearchParams(payload);
@@ -295,11 +296,11 @@ export default function Selection() {
                   tree={tree}
                 ></Location>
               ) : (
-                <Period
-                  onSelect={updatePeriod}
-                  selected={selectedPeriod}
-                ></Period>
-              )}
+                  <Period
+                    onSelect={updatePeriod}
+                    selected={selectedPeriod}
+                  ></Period>
+                )}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -314,11 +315,11 @@ export default function Selection() {
       </div>
       <Row className="justify-content-center mt-5">
         <Col className="col-11 charts-container">
-          {/* {chartsLoading && chartData.length === 0 ? (
+          {chartsLoading && chartData.length === 0 ? (
             <Loader className="loader-div"></Loader>
-          ) : chartData.length !== 0 ? ( */}
-          <ChartsDiv chartData={chartData} indicators={selectedIndicators} periods={selectedPeriod} />
-          {/* ) : <p className="charts-text">PLEASE MAKE SELECTION TO DISPLAY CHARTS</p>} */}
+          ) : chartData.length !== 0 ? (
+          <ChartsDiv chartData={chartData} indicators={selectedIndicators} periods={selectedPeriod} locations={selectedLocation} />
+          ) : <p className="charts-text">PLEASE MAKE SELECTION TO DISPLAY CHARTS</p>}
         </Col>
       </Row>
     </div>
