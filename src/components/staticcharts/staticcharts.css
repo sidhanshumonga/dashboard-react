@@ -1,0 +1,16 @@
+section{
+    margin: 50px 0 35px;
+}
+
+
+.chart-area{
+    display: block;
+    width: 100%;
+    min-height: 325px;
+    border-radius: 4px;
+    background-color: #fff;
+    float: left;
+    box-shadow: 5px 5px 20px 0 rgba(218,218,218,0.5);
+    text-align: center;
+    padding: 10px;
+}

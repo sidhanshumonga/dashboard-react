@@ -48,15 +48,53 @@ export default function Cards() {
 
 
   return (
-    <div className="row justify-content-around mx-5 mt-4 mb-5">
-      <div className="col col-lg-3 col-md-3 col-sm-3 cards card1 p-4">
-        {countries}+ Countries
-      </div>
-      <div className="col col-lg-3 col-md-3 col-sm-3 cards card2 p-4">
-        {indicators}+ Indicators
-      </div>
-      <div className="col col-lg-3 col-md-3 col-sm-3 cards card3 p-4">
-        {reporting}% Reporting rate
+    <div className="container-fluid my-5">
+      <div className="row">
+        <div className="col-4">
+          <div className="counter">
+            <div className="container-count">
+              <div className="row">
+                <div className="col-12 col-lg-12">
+                  <div className="count-up bdr-top-s0">
+                    <p className="counter-count">{countries}</p>
+                    <span>+</span>
+                    <h3>Countries</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-4">
+          <div className="counter">
+            <div className="container-count">
+              <div className="row">
+                <div className="col-12 col-lg-12">
+                  <div className="count-up bdr-top-s1">
+                    <p className="counter-count">{indicators}</p>
+                    <span>+</span>
+                    <h3>Indicators</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-4">
+          <div className="counter">
+            <div className="container-count">
+              <div className="row">
+                <div className="col-12 col-lg-12">
+                  <div className="count-up bdr-top-s2">
+                    <p className="counter-count">{reporting}</p>
+                    <span>%</span>
+                    <h3>Reporting rate</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

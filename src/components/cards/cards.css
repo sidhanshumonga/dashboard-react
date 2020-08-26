@@ -18,3 +18,56 @@
 .card3 {
     background:#9bbae6
 }
+
+
+
+.counter
+{
+    text-align: center;
+}
+
+.counter-count, .count-up span {
+    font-size: 40px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    margin: 0px;
+}
+
+.count-up{
+    display: block;
+    width: 100%;
+    min-height: 125px;
+    border-radius: 4px;
+    background-color: #fff;
+    float: left;
+    box-shadow: 5px 5px 20px 0 rgba(218,218,218,0.5);
+}
+
+.bdr-top-s0{
+    border-top: 3px solid #008dc9;
+    color: #008dc9;
+}
+
+.bdr-top-s1{
+    border-top: 3px solid #91c841;
+    color: #91c841;
+}
+
+.bdr-top-s2{
+    border-top: 3px solid #567b91;
+    color: #567b91;
+}
+
+.bdr-top-s3{
+    border-top: 3px solid #e85c58;
+    color: #e85c58;
+}
+
+
+.count-up h3{
+    font-size: 22px;
+    font-weight: bold;
+    color: #3c4245;
+}

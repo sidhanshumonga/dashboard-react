@@ -23,6 +23,7 @@ import React from "react";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import Loader from '../loader/loader.js'
+import StaticChart from '../staticcharts/staticcharts.js'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -319,7 +320,7 @@ export default function Selection() {
             <Loader className="loader-div"></Loader>
           ) : chartData.length !== 0 ? (
           <ChartsDiv chartData={chartData} indicators={selectedIndicators} periods={selectedPeriod} locations={selectedLocation} />
-          ) : <p className="charts-text">PLEASE MAKE SELECTION TO DISPLAY CHARTS</p>}
+          ) : <StaticChart></StaticChart>}
         </Col>
       </Row>
     </div>

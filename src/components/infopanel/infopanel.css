@@ -1,0 +1,185 @@
+
+.feature-area h3{font-weight: bold; font-size: 25px;}
+.feature-area p{font-size: 16px; line-height: 24px;}
+.feature-area ul li{font-size: 18px; line-height: 24px;}
+
+.feature-sidebar .section-header {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #d8d8d8;
+    color: #20313b;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.accordion {
+  background-color: #fff;
+    color: #008dc9;
+    cursor: pointer;
+    padding: 10px 0;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.4s;
+    border-top: 1px solid #f4f4f4;
+}
+
+.active, .accordion:hover, .accordion:focus {
+  background-color: #fff;
+    color: #d86422;
+    outline: none;
+}
+
+.accordion:after {
+  font-family: 'FontAwesome';
+  content: '\f107';
+  color: #008dc9;
+  font-weight: bold;
+    font-size: 22px;
+  float: right;
+  margin-left: 5px;
+    outline: none;
+}
+
+.active:after {
+  font-family: 'FontAwesome';
+  content: '\f106';
+    outline: none;
+    color: #d86422;
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+ outline: none;
+}
+
+.panel a{
+    display: block; text-decoration: none; font-size: 16px;
+}
+.panel a:hover{
+    color: #d86422;
+}
+
+
+
+
+.ourwork-area h3{font-weight: bold; font-size: 25px; border-bottom:solid 1px #e8e8e8; padding: 0 0 10px 0; margin: 0 0 25px 0; }
+
+.ourwork-area .thumbs{
+    height: 272px;
+    border-radius: 4px 4px 0 0;
+    /* background-image: url(../img/ncds-children-playing.jpg); */
+    background-size: cover;
+    display: block;
+    margin: 0 0 10px 0;
+}
+
+.ourwork-area a{
+    color: #3c4245;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: normal;
+    text-decoration: none;
+}
+
+.related-health-area h3{font-weight: bold; font-size: 25px; border-bottom:solid 1px #e8e8e8; padding: 0 0 10px 0; margin: 0 0 25px 0; }
+
+
+
+.related-health-area .vertical-box{
+    display: block;
+    width: 100%;
+    min-height: 131px;
+    margin: 0 0 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    float: left;
+    box-shadow: 5px 5px 20px 0 rgba(218,218,218,0.5);
+}
+
+.related-health-area .vertical-box .thumbs{
+    height: 131px;
+    border-radius: 4px 4px 0 0;
+    display: block;
+    width: 131px;
+    float: left;
+}
+
+.related-health-area .vertical-box a{
+    position: absolute;
+    padding: 15px;
+    color: #3c4245;
+    font-size: 18px;
+    font-weight: 700;
+    float: left;
+}
+
+
+.important-link-area h3{font-weight: bold; font-size: 25px; border-bottom:solid 1px #e8e8e8; padding: 0 0 10px 0; margin: 0 0 25px 0; }
+
+.important-link-area ul{padding:0px; margin:0 0 0 20px;;}
+
+.important-link-area ul li {
+    color: #3c4245;
+}
+
+.important-link-area ul li a{
+    color: #008dc9;
+    font-size: 16px;
+}
+
+.important-link-area ul li ul li{
+    list-style: disc;
+}
+
+
+.publication-area h3{font-weight: bold; font-size: 25px; border-bottom:solid 1px #e8e8e8; padding: 0 0 10px 0; margin: 0 0 25px 0; }
+
+.publication-area .vertical-box{
+    display: block;
+    width: 100%;
+    min-height: 131px;
+    margin: 0 0 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    float: left;
+    box-shadow: 5px 5px 20px 0 rgba(218,218,218,0.5);
+}
+
+.publication-area .vertical-box a{
+    
+    padding: 15px;
+    color: #3c4245;
+    font-size: 18px;
+    font-weight: 700;
+    float: left;
+}
+
+
+.publication-links{
+    float: left;
+    margin: 0 0 0 15px;
+}
+
+.publication-links span a{
+    display: contents;
+    font-size: 14px!important;
+    color: dimgray;
+    text-decoration: none;
+}
+
+.publication-links span a i{color: #e21e00; font-size: 18px;}
+
+
+.thumbs-img {
+    /* background-image: url('/src/assets/universal-health-covergae.jpg'); */
+     background-size: cover;
+}
