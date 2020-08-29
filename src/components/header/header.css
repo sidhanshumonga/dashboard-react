@@ -75,7 +75,7 @@
 .megamenu {
 	position: absolute !important;
 	width: 100vw !important;
-	left: -123px !important;
+	left: 0px !important;
 	right: 0 !important;
 	padding: 15px !important;
   background: #20313b !important;
@@ -216,7 +216,7 @@
   border-right: none!important;
 }
 
-.list2 {
+/* .list2 {
   left: -303px !important;
 }
 
@@ -230,7 +230,7 @@
 
 .list5 {
   left: -741px !important;
-}
+} */
 
 /* Style the list */
 .breadcrumb {

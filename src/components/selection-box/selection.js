@@ -160,7 +160,7 @@ export default function Selection() {
 
   return (
     <div>
-      <div className="px-5 pb-5 gradient-div">
+      <div className="p-5 gradient-div" style={{ backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${require("../../assets/f1-13102017-kh-5786.jpg")})` }}>
         <Row className="justify-content-center align-items-center">
           <Col className="col-8 mt-5">
             <Form>
@@ -202,6 +202,7 @@ export default function Selection() {
                     {...params}
                     label="Search Indicators"
                     variant="outlined"
+                    style={{caretColor: "white"}}
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
@@ -319,7 +320,7 @@ export default function Selection() {
           {chartsLoading && chartData.length === 0 ? (
             <Loader className="loader-div"></Loader>
           ) : chartData.length !== 0 ? (
-          <ChartsDiv chartData={chartData} indicators={selectedIndicators} periods={selectedPeriod} locations={selectedLocation} />
+            <ChartsDiv chartData={chartData} indicators={selectedIndicators} periods={selectedPeriod} locations={selectedLocation} />
           ) : <StaticChart></StaticChart>}
         </Col>
       </Row>

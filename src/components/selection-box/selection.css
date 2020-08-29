@@ -5,8 +5,14 @@
 }
 
 .gradient-div {
-    background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    /* background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); */
     transition: all 0.5s ease-in-out;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url();
+    height: 400px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 }
 
 /* .gradient-div:hover {
@@ -46,7 +52,20 @@ button:focus {
     /* font-weight: bold; */
 }
 
+.clear-link {
+    color: white;
+    font-weight: bold;
+}
+
 .clear-link:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: white !important
+}
+
+.MuiCircularProgress-root, .MuiFormLabel-root {
+    color: white !important;
 }
