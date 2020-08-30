@@ -9,7 +9,7 @@ export default function Cards() {
   const getRandomNum = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  const randomC = getRandomNum(15, 25);
+  const randomC = 11;
   const randomI = getRandomNum(50, 60);
   const randomR = getRandomNum(15, 25);
 

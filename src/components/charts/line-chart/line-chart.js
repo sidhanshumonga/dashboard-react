@@ -235,19 +235,7 @@ export default function LineChart(props) {
             }
         }
 
-        //chart.scrollbarY = new am4core.Scrollbar();
-        // chart.scrollbarX = new am4core.Scrollbar();
-        //filter function for reference
-        // console.log(
-        //   data
-        //     .filter(
-        //       (thing, index, self) =>
-        //         index === self.findIndex((t) => t.location === thing.location)
-        //     )
-        //     .map((x) => {
-        //       return { location: x.location, location_id: x.location_id };
-        //     })
-        // );
+
         return () => {
             chart.dispose();
         };

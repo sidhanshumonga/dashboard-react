@@ -14,3 +14,14 @@ section{
     text-align: center;
     padding: 10px;
 }
+
+.table-fn-xs {
+    font-size: 10px;
+    width: 96% !important;
+}
+
+.tr-head {
+    vertical-align: inherit !important;
+    font-weight: bold;
+    max-width: 200px !important;
+}

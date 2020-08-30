@@ -45,7 +45,7 @@
     outline: none;
 }
 
-.active:after {
+.accordion.active:after {
   font-family: 'FontAwesome';
   content: '\f106';
     outline: none;

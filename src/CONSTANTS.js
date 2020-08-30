@@ -2,6 +2,11 @@ export const indicators = "api/v1.0/indicator";
 export const dataelements = "api/v1.0/dataelement";
 export const orgunits = "api/v1.0/orgunit";
 export const postSearchReq = "api/v1.0/search";
+export const staticChart1 = "api/v1.0/tcm-pub-expd";
+export const staticChart2 = "api/v1.0/tcm-opd";
+export const staticChart3 = "api/v1.0/tcm-pract-dnsty";
+export const staticChart4 = "api/v1.0/tcm-hspt-dnsty";
+export const staticTable = "api/v1.0/tcm-dip-grat-post";
 
 export const DIALOG_TYPE = {
   LOCATION: "location",
