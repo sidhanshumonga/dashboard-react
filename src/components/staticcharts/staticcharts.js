@@ -9,14 +9,81 @@ import * as Utils from "../../Utils.js";
 import * as CONSTANTS from "../../CONSTANTS.js";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import Static from '../dialog-box/static/static'
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+
 am4core.useTheme(am4themes_animated);
+const styles = (theme) => ({
+    root: {
+      margin: 0,
+      padding: theme.spacing(2),
+    },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+    },
+  });
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const DialogTitle = withStyles(styles)((props) => {
+    const { children, classes, onClose, ...other } = props;
+    return (
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+        <Typography variant="h6">{children}</Typography>
+        {onClose ? (
+          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </MuiDialogTitle>
+    );
+  });
+
+  const titles = {
+      1 : "Per capita TCM expenditure",
+      2 : "TCM department visits as % of all OPD visits",
+      3 : "TCM department visits as % of all OPD visits",
+      4 : "TCM department visits as % of all OPD visits",
+      5 : "Top 10 health problems for seeking TCM service",
+      6 : "Number of Diploma/Graduates/Higher studies in TCM",
+      7 : "POLICY",
+      8 : "RESEARCH",
+      9 : "REGULATION",
+  }
 
 export default function StaticChart() {
     const [tableData, setDynamicTableData] = React.useState([])
-    const [rawData, setRawData] = React.useState([])
     const [columns, setColumns] = React.useState([])
+    const [DialogOpen, setDialogOpen] = React.useState(false);
+    const [DialogType, setDialogType] = React.useState(null);
 
     const selectedType = "period"
+
+    const handleClose = () => {
+        setDialogOpen(false);
+    };
+
+    const openModal = (v) => {
+        setDialogType(v);
+        setDialogOpen(true);
+    };
+
+
     React.useEffect(() => {
         (async () => {
             const response = await fetch(Utils.getBaseUrl() + CONSTANTS.staticChart1);
@@ -66,7 +133,6 @@ export default function StaticChart() {
                 .map((x) => {
                     return { location: x.location, location_id: x.location_id };
                 })
-            setRawData(data)
             setColumns(cols)
             setDynamicTableData(modifyDataForTable(data, 'period'))
         })();
@@ -259,10 +325,13 @@ export default function StaticChart() {
                 <div className="row">
                     <div className="col-4">
                         <div className="chart-area bdr-top-s3">
-                            <div className="container-chart">
+                            <div className="container-chart" id="container-chart1">
                                 <div className="row" style={{ height: "400px" }}>
                                     <div className="col-12 col-lg-12">
-                                        Per capita TCM expenditure
+                                        Per capita TCM expenditure 
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart1" onClick={() => openModal(1)}>open_in_full</i>
+                                        </div>
                                         <div id="chart1" style={{ height: "95%" }}></div>
                                     </div>
                                 </div>
@@ -271,10 +340,13 @@ export default function StaticChart() {
                     </div>
                     <div className="col-4">
                         <div className="chart-area bdr-top-s2">
-                            <div className="container-chart">
+                            <div className="container-chart" id="container-chart2">
                                 <div className="row" style={{ height: "400px" }}>
                                     <div className="col-12 col-lg-12">
                                         TCM department visits as % of all OPD visits
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart2" onClick={() => openModal(2)}>open_in_full</i>
+                                        </div>
                                         <div id="chart2" style={{ height: "95%" }}></div>
                                     </div>
                                 </div>
@@ -283,10 +355,13 @@ export default function StaticChart() {
                     </div>
                     <div className="col-4">
                         <div className="chart-area bdr-top-s0">
-                            <div className="container-chart">
+                            <div className="container-chart" id="container-chart3">
                                 <div className="row" style={{ height: "400px" }}>
                                     <div className="col-12 col-lg-12">
                                         TCM Hospitals and Clinical density
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart3" onClick={() => openModal(3)}>open_in_full</i>
+                                        </div>
                                         <div id="chart3" style={{ height: "95%" }}></div>
                                     </div>
                                 </div>
@@ -297,9 +372,12 @@ export default function StaticChart() {
                 <div className="row my-4">
                     <div className="col-7">
                         <div className="chart-area bdr-top-s3">
-                            <div className="container-chart">
+                            <div className="container-chart" id="container-chart4">
                                 <div className="row" style={{ height: "400px" }}>
                                     <div className="col-12 col-lg-12">
+                                    <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart4" onClick={() => openModal(4)}>open_in_full</i>
+                                        </div>
                                         TCM regulated practitioner density and distribution
                                         <div id="chart4" style={{ height: "95%" }}></div>
                                     </div>
@@ -309,10 +387,13 @@ export default function StaticChart() {
                     </div>
                     <div className="col-5">
                         <div className="chart-area bdr-top-s3">
-                            <div className="container-chart">
-                                <div className="row" style={{ height: "400px", overflow: "scroll" }}>
+                            <div className="container-chart" id="container-chart5" style={{ height: "400px", overflow: "scroll" }}>
+                                <div className="row">
                                     <div className="col-12 col-lg-12">
                                         Top 10 health problems for seeking TCM service
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart5" onClick={() => openModal(5)}>open_in_full</i>
+                                        </div>
                                         <table className="table table-bordered table-fn-xs p-3">
                                             <thead>
                                                 <tr>
@@ -389,10 +470,13 @@ export default function StaticChart() {
                 <div className="row my-4">
                     <div className="col-6">
                         <div className="chart-area bdr-top-s2">
-                            <div className="container-chart">
-                                <div className="row mx-1" style={{ height: "400px", overflow: "scroll", width: "100%" }}>
+                            <div className="container-chart" id="container-chart6" style={{ height: "400px", overflow: "scroll", width: "100%" }}>
+                                <div className="row mx-1">
                                     <div className="col-12 col-lg-12">
                                         Number of Diploma/Graduates/Higher studies in TCM
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart6" onClick={() => openModal(6)}>open_in_full</i>
+                                        </div>
                                         <table className="table table-bordered table-fn-xs p-3">
                                             <thead>
                                                 <tr>
@@ -444,10 +528,13 @@ export default function StaticChart() {
                     </div>
                     <div className="col-6">
                         <div className="chart-area bdr-top-s1">
-                            <div className="container-chart">
-                                <div className="row" style={{ height: "400px", overflow: "scroll" }}>
+                            <div className="container-chart" id="container-chart7" style={{ height: "400px", overflow: "scroll" }}>
+                                <div className="row">
                                     <div className="col-12 col-lg-12">
                                         POLICY
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart7" onClick={() => openModal(7)}>open_in_full</i>
+                                        </div>
                                         <table className="table table-bordered table-fn-xs p-3">
                                             <thead>
                                                 <tr><th colSpan="6">POLICY</th></tr>
@@ -521,10 +608,13 @@ export default function StaticChart() {
                 <div className="row my-4">
                     <div className="col-6">
                         <div className="chart-area bdr-top-s3">
-                            <div className="container-chart">
-                                <div className="row" style={{ height: "400px", overflow: "scroll" }}>
+                            <div className="container-chart" id="container-chart8" style={{ height: "400px", overflow: "scroll" }}>
+                                <div className="row">
                                     <div className="col-12 col-lg-12">
                                         RESEARCH
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart8" onClick={() => openModal(8)}>open_in_full</i>
+                                        </div>
                                         <table className="table table-bordered table-fn-xs p-3">
                                             <thead>
                                                 <tr><th colSpan="6">RESEARCH</th></tr>
@@ -596,10 +686,13 @@ export default function StaticChart() {
                     </div>
                     <div className="col-6">
                         <div className="chart-area bdr-top-s0">
-                            <div className="container-chart">
-                                <div className="row" style={{ height: "400px", overflow: "scroll" }}>
+                            <div className="container-chart" id="container-chart9" style={{ height: "400px", overflow: "scroll" }}>
+                                <div className="row">
                                     <div className="col-12 col-lg-12">
                                         REGULATION
+                                        <div className="d-inline-flex" style={{ width: '50px', height: '24px', float: 'right' }}>
+                                            <i className="material-icons expand-icon" id="expand-chart9" onClick={() => openModal(9)}>open_in_full</i>
+                                        </div>
                                         <table className="table table-bordered table-fn-xs p-3">
                                             <thead>
                                                 <tr><th colSpan="6">REGULATION</th></tr>
@@ -710,6 +803,26 @@ export default function StaticChart() {
                     </div>
                 </div>
             </div>
+            <Dialog
+                open={DialogOpen}
+                onClose={handleClose}
+                fullWidth={true}
+                maxWidth="lg"
+                className="dialogNoPadding"
+                TransitionComponent={Transition}
+                scroll={"paper"}
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+            >
+                <DialogTitle id="scroll-dialog-title" onClose={handleClose}>
+                    {titles[DialogType]}
+                </DialogTitle>
+                <DialogContent dividers={true}>
+                    <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+                        <Static type={DialogType} />
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
         </section>
     );
 }

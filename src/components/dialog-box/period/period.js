@@ -52,7 +52,7 @@ export default function Period(props) {
   const classes = useStyles();
 
   const [checked, setChecked] = React.useState(props.selected);
-  const [selectedPeriodType, setSelectedPeriodType] = React.useState("m");
+  const [selectedPeriodType, setSelectedPeriodType] = React.useState("y");
   const [openYearSelect, setOpenYearSelect] = React.useState(false);
   const [selectedYear, setSelectedYear] = React.useState(
     parseInt(moment(new Date()).format("YYYY"))
@@ -158,7 +158,7 @@ export default function Period(props) {
                 value={selectedPeriodType}
               >
                 {CONSTANTS.PERIOD_TYPES.map((period) => (
-                  <MenuItem value={period.id}>{period.name}</MenuItem>
+                  <MenuItem value={period.id} disabled={period.id !== 'y'}>{period.name}</MenuItem>
                 ))}
               </Select>
             </FormControl>

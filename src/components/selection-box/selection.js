@@ -202,7 +202,7 @@ export default function Selection() {
                     {...params}
                     label="Search Indicators"
                     variant="outlined"
-                    style={{ caretColor: "white", color: "white" }}
+                    style={{ caretColor: "white", color: "white !important" }}
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
@@ -275,7 +275,7 @@ export default function Selection() {
         </Row>
         <div className="app-name-backdrop"></div>
         <div className="app-name-backdrop opaque">
-          TRM Open Data Portal
+          <p>TRM Open Data Portal</p>
         </div>
         <Dialog
           open={DialogOpen}

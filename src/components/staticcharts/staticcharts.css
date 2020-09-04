@@ -16,7 +16,6 @@ section{
 }
 
 .table-fn-xs {
-    font-size: 10px;
     width: 96% !important;
 }
 
@@ -24,4 +23,45 @@ section{
     vertical-align: inherit !important;
     font-weight: bold;
     max-width: 200px !important;
+}
+
+.expand-icon {
+    display: none;
+    cursor: pointer;
+}
+
+#container-chart1:hover #expand-chart1 {
+    display: inline-flex;
+}
+
+#container-chart2:hover #expand-chart2 {
+    display: inline-flex;
+}
+
+#container-chart3:hover #expand-chart3 {
+    display: inline-flex;
+}
+
+#container-chart4:hover #expand-chart4 {
+    display: inline-flex;
+}
+
+#container-chart5:hover #expand-chart5 {
+    display: inline-flex;
+}
+
+#container-chart6:hover #expand-chart6 {
+    display: inline-flex;
+}
+
+#container-chart7:hover #expand-chart7 {
+    display: inline-flex;
+}
+
+#container-chart8:hover #expand-chart8 {
+    display: inline-flex;
+}
+
+#container-chart9:hover #expand-chart9 {
+    display: inline-flex;
 }
